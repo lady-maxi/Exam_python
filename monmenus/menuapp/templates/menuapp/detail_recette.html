@@ -1,41 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% extends 'menuapp/base.html' %}
+{% extends 'menuapp/base.html' %}
 {% block content %}
-  <div class="card shadow mb-4">
-    {% if recette.image %}
-      <img src="{{ recette.image.url }}" alt="{{ recette.nom }}" class="card-img-top img-fluid" style="max-height: 400px; object-fit: cover;">
-    {% endif %}
-    <div class="card-body">
-      <h2 class="card-title">{{ recette.nom }}</h2>
-      <p><strong>Coût estimé :</strong> {{ recette.cout_estime }} Fcfa</p>
-      <p><strong>Temps de préparation :</strong> {{ recette.temps_preparation }} min</p>
-
-      <h4>Ingrédients :</h4>
-      <ul class="list-group mb-3">
-        {% for ing in recette.ingredients.all %}
-    <li class="list-group-item">
-        {{ ing.nom }} : {{ ing.quantite }} {{ ing.unite }}
-        {% if ing.quantite == 0 or ing.quantite == "0" or ing.quantite == "0.0" %}
-        <span class="badge bg-danger">Rupture de stock</span>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card shadow rounded p-4 bg-white">
+        {% if recette.image %}
+          <img src="{{ recette.image.url }}" alt="{{ recette.nom }}" class="card-img-top img-fluid mb-3 rounded" style="max-height: 400px; object-fit: cover;">
         {% endif %}
-    </li>
-    {% endfor %}
-      </ul>
+                <form method="post" action="{% url 'ajouter_favori' recette.id %}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-outline-danger">
+    <i class="bi bi-chat-heart"></i>  favoris
+  </button>
+</form>
+        <h2 class="card-title">{{ recette.nom }}</h2>
+        <p><strong>Coût estimé :</strong> {{ recette.cout_estime }} Fcfa</p>
+        <p><strong>Temps de préparation :</strong> {{ recette.temps_preparation }} min</p>
 
-      <h4>Instructions :</h4>
-      <p>{{ recette.instructions }}</p>
+        <h4>Ingrédients :</h4>
+        <ul class="list-group mb-3">
+          {% for ing in recette.ingredients.all %}
+            <li class="list-group-item">
+              {{ ing.nom }} : {{ ing.quantite }} {{ ing.unite }}
+              {% if ing.quantite == 0 or ing.quantite == "0" or ing.quantite == "0.0" %}
+                <span class="badge bg-danger">Rupture de stock</span>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
 
-      <a href="{% url 'recettes' %}" class="btn btn-secondary mt-3">⬅️ Retour à la liste</a>
-      <a href="{% url 'export_pdf' recette.id %}" class="btn btn-warning mb-3">Exporter en PDF</a> <br>
+        <h4>Instructions :</h4>
+        <p>{{ recette.instructions }}</p>
+
+        <h5><i class="bi bi-share"></i> Partager cette recette :</h5>
+        <div class="d-flex gap-2 mb-3">
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="btn btn-primary btn-sm">
+            <i class="bi bi-facebook"></i> Facebook
+          </a>
+          <a href="https://api.whatsapp.com/send?text=Regarde cette recette ! {{ request.build_absolute_uri }}" target="_blank" class="btn btn-success btn-sm">
+            <i class="bi bi-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://twitter.com/intent/tweet?text=Regarde cette recette !&url={{ request.build_absolute_uri }}" target="_blank" class="btn btn-info btn-sm">
+            <i class="bi bi-twitter-x"></i> Twitter
+          </a>
+        </div>
+
+
+
+        <div class="d-flex justify-content-between">
+          <a href="{% url 'recettes' %}" class="btn btn-secondary">⬅️ Retour à la liste</a>
+          <a href="{% url 'export_pdf' recette.id %}" class="btn btn-warning">📄 Exporter en PDF</a>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 {% endblock %}
-</body>
-</html>

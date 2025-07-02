@@ -5,6 +5,7 @@ from .models import Ingredient, Recette
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from .models import Favori
 from .models import Historique
 import random
 import re
@@ -164,3 +165,12 @@ def detail_recette(request, recette_id):
 def historique(request):
     historiques = Historique.objects.all().order_by('-date_validation')
     return render(request, 'menuapp/historique.html', {'historiques': historiques})
+
+def ajouter_favori(request, recette_id):
+    recette = get_object_or_404(Recette, id=recette_id)
+    Favori.objects.create(recette=recette)
+    return redirect('mes_favoris')
+
+def mes_favoris(request):
+    favoris = Favori.objects.all().order_by('-date_ajout')
+    return render(request, 'menuapp/mes_favoris.html', {'favoris': favoris})

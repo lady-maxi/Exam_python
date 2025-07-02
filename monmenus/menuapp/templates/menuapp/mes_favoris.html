@@ -1,0 +1,29 @@
+{% extends 'menuapp/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2><i class="bi bi-heart-fill text-danger"></i> Mes Recettes Préférées</h2>
+  {% if favoris %}
+    <div class="row">
+      {% for fav in favoris %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-star-fill text-warning"></i> {{ fav.recette.nom }}
+              </h5>
+              <p class="card-text">
+                Ajoutée le {{ fav.date_ajout|date:"d/m/Y H:i" }}
+              </p>
+              <a href="{% url 'detail_recette' fav.recette.id %}" class="btn btn-outline-primary btn-sm">
+                Voir la recette
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">Aucune recette ajoutée en favoris pour le moment.</p>
+  {% endif %}
+</div>
+{% endblock %}

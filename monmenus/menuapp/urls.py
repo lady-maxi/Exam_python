@@ -18,5 +18,7 @@ urlpatterns = [
     path('modifier-ingredient_placard/<int:id>/', views.modifier_ingredient_placard, name='modifier_ingredient_placard'),
     path('supprimer-ingredient_placard/<int:id>/', views.supprimer_ingredient_placard, name='supprimer_ingredient_placard'),
     path('historique/', views.historique, name='historique'),
+    path('ajouter-favori/<int:recette_id>/', views.ajouter_favori, name='ajouter_favori'),
+    path('mes-favoris/', views.mes_favoris, name='mes_favoris'),
     
     ]

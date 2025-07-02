@@ -1,23 +1,26 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <style>
-      body { font-family: Arial, sans-serif; }
-      h1 { color: #2b9348; }
-    </style>
-</head>
-<body>
-  <h1>{{ recette.nom }}</h1>
-  <p><strong>Coût estimé :</strong> {{ recette.cout_estime }} €</p>
+<style>
+  body { font-family: Arial, sans-serif; margin: 40px; }
+  h1 { color: #2b9348; }
+  .section { margin-bottom: 20px; }
+  ul { padding-left: 20px; }
+</style>
+{% if recette.image %}
+  <img src="{{ recette.image.url }}" alt="{{ recette.nom }}" style="max-width: 100%; height: auto; margin-bottom: 20px;">
+{% endif %}
+<h1>{{ recette.nom }}</h1>
+<div class="section">
+  <p><strong>Coût estimé :</strong> {{ recette.cout_estime }} Fcfa</p>
   <p><strong>Temps de préparation :</strong> {{ recette.temps_preparation }} min</p>
+</div>
+<div class="section">
   <h3>Ingrédients :</h3>
   <ul>
     {% for ing in recette.ingredients.all %}
-      <li>{{ ing.nom }} ({{ ing.quantite }})</li>
+      <li>{{ ing.nom }}</li>
     {% endfor %}
   </ul>
+</div>
+<div class="section">
   <h3>Instructions :</h3>
   <p>{{ recette.instructions }}</p>
-</body>
-</html>
+</div>

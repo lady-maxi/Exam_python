@@ -53,3 +53,12 @@ class Historique(models.Model):
 
     def __str__(self):
         return f"{self.recette.nom} — {self.date_validation.strftime('%d/%m/%Y %H:%M')}"
+    
+
+
+class Favori(models.Model):
+    recette = models.ForeignKey('Recette', on_delete=models.CASCADE)
+    date_ajout = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.recette.nom} — {self.date_ajout.strftime('%d/%m/%Y %H:%M')}"
