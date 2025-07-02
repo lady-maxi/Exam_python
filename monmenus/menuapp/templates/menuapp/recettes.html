@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'menuapp/base.html' %}
+{% block content %}
+  <h2 class="mb-4">Toutes les Recettes 🍽️</h2>
+  <div class="row">
+    {% for recette in recettes %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+          {% if recette.image %}
+            <img src="{{ recette.image.url }}" class="card-img-top img-fluid" style="max-height: 200px; object-fit: cover;">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ recette.nom }}</h5>
+            <p><strong>Coût estimé :</strong> {{ recette.cout_estime }} Fcfa</p>
+            <p><strong>Temps préparation :</strong> {{ recette.temps_preparation }} min</p>
+           <a href="{% url 'detail_recette' recette.id %}" class="btn btn-primary btn-sm">Voir la recette</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Aucune recette disponible pour le moment.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
+</body>
+</html>

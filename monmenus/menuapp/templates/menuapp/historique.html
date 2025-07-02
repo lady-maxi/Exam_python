@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'menuapp/base.html' %}
+{% block content %}
+  <h2 class="mb-4">Historique des Menus Validés 📑</h2>
+  {% if historiques %}
+    <ul class="list-group">
+      {% for h in historiques %}
+        <li class="list-group-item">
+          <i class="bi bi-check-square"></i> <strong>{{ h.recette.nom }}</strong> — validée le {{ h.date_validation|date:"d/m/Y H:i" }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Aucune recette validée pour l'instant.</p>
+  {% endif %}
+{% endblock %}
+</body>
+</html>

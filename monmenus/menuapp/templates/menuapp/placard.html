@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EquiTabel</title>
+</head>
+<body>
+{% extends 'menuapp/base.html' %}
+
+{% block content %}
+    <h2>Mon Placard 🗄️</h2>
+
+    <div class="row">
+        {% for ingredient in ingredients %}
+        <div class="col-md-3 mb-3">
+            <div class="card h-100">
+            <div class="card-body">
+                
+            <h5 class="card-title">
+                                {% if ingredient.categorie == "Légumes frais" %}
+                🥦
+                {% elif ingredient.categorie == "Fruits frais" %}
+                🍎
+                {% elif ingredient.categorie == "Viandes" %}
+                🍗
+                {% elif ingredient.categorie == "Poissons" %}
+                🐟
+                {% elif ingredient.categorie == "Produits laitiers" %}
+                🧀
+                {% elif ingredient.categorie == "Œufs" %}
+                🥚
+                {% elif ingredient.categorie == "Charcuterie" %}
+                🥓
+                {% elif ingredient.categorie == "Plats cuisinés" %}
+                🍲
+                {% elif ingredient.categorie == "Pâtes" %}
+                🍝
+                {% elif ingredient.categorie == "Riz" %}
+                🍚
+                {% elif ingredient.categorie == "Légumineuses" %}
+                🌱
+                {% elif ingredient.categorie == "Conserves" %}
+                🥫
+                {% elif ingredient.categorie == "Épices" %}
+                🧂
+                {% elif ingredient.categorie == "Céréales" %}
+                🥣
+                {% elif ingredient.categorie == "Biscuits & Snacks" %}
+                🍪
+                {% elif ingredient.categorie == "Huiles & Vinaigres" %}
+                🫒
+                {% elif ingredient.categorie == "Farine & Sucre" %}
+                🍰
+                {% else %}
+                🗃️
+                {% endif %}
+                {{ ingredient.nom }}
+            </h5>
+            <p class="card-text">
+                Quantité : {{ ingredient.quantite }}
+                Unité : {{ ingredient.unite }}<br>
+                Catégorie : {{ ingredient.categorie }} <br>
+                <a href="{% url 'modifier_ingredient_placard' ingredient.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                <a href="{% url 'supprimer_ingredient_placard' ingredient.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+            </p>
+            </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Aucun ingrédient pour le moment.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'ajouter_ingredient_placard' %}" class="btn btn-success">Ajouter un ingrédient</a>
+    <a href="{% url 'accueil' %}" class="btn btn-secondary">Retour accueil</a>
+{% endblock %}
+</body>
+</html>

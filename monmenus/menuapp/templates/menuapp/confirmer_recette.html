@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'menuapp/base.html' %}
+{% block content %}
+  <h2>Confirmer la recette : {{ recette.nom }}</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Ingrédient</th>
+          <th>Quantité disponible</th>
+          <th>Quantité utilisée</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ing in ingredients %}
+        <tr>
+          <td>{{ ing.nom }}</td>
+          <td>{{ ing.quantite }}</td>
+          <td>
+            <input type="number" step="0.01" name="quantite_{{ ing.id }}" value="{{ ing.quantite_recette }}" class="form-control">
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit" class="btn btn-success">Valider et mettre à jour le stock</button>
+  </form>
+{% endblock %}
+</body>
+</html>

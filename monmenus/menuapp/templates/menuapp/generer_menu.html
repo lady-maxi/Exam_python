@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'menuapp/base.html' %}
+
+{% block content %}
+  {% if recette %}
+    <div class="card mb-4">
+      {% if recette.image %}
+        <img src="{{ recette.image.url }}" alt="Photo recette" class="card-img-top img-fluid" style="max-height: 500px; object-fit: cover;">
+      {% endif %}
+      <div class="card-body">
+        <h2 class="card-title">{{ recette.nom }}</h2>
+        <p><strong>Coût estimé :</strong> {{ recette.cout_estime }} €</p>
+        <p><strong>Temps de préparation :</strong> {{ recette.temps_preparation }} min</p>
+        <h4>Ingrédients :</h4>
+        <ul class="list-group mb-3">
+          {% for ing in recette.ingredients.all %}
+            <li class="list-group-item">{{ ing.nom }} ({{ ing.quantite }})</li>
+          {% endfor %}
+        </ul>
+        <h4>Instructions :</h4>
+        <p>{{ recette.instructions }}</p>
+          <a href="{% url 'export_pdf' recette.id %}" class="btn btn-warning mb-3">Exporter en PDF</a> <br>
+          <a href="{% url 'generer_menu' %}" class="btn btn-secondary" style="margin-right: 70%;"><i class="bi bi-shuffle"></i> une autre recette</a> 
+          <a href="{% url 'confirmer_recette' recette.id %}" class="btn btn-success"><i class="bi bi-check2-circle"></i> Choisir cette recette</a>   
+      </div>
+    </div>
+  {% else %}
+    <p>Aucune recette trouvée !</p>
+  {% endif %}
+
+  <a href="{% url 'accueil' %}" class="btn btn-secondary mt-2">Retour accueil</a>
+  
+
+{% endblock %}
+</body>
+</html>

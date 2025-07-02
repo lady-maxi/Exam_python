@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'menuapp/base.html' %}
+{% block content %}
+  <h2>Modifier {{ ingredient.nom }}</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label>Nom</label>
+      <input type="text" name="nom" class="form-control" value="{{ ingredient.nom }}">
+    </div>
+    <div class="mb-3">
+      <label>Quantité</label>
+      <input type="text" name="quantite" class="form-control" value="{{ ingredient.quantite }}">
+      <label>Unité</label>
+  <input type="text" name="unite" class="form-control" placeholder="ex: g, kg, L, pièces...">
+
+    </div>
+    <div class="mb-3">
+      <label>Catégorie</label>
+      <select name="categorie" class="form-control">
+  <option value="">-- Choisir une catégorie --</option>
+  <option value="Légumes frais">Légumes frais 🥦</option>
+  <option value="Fruits frais">Fruits frais 🍎</option>
+  <option value="Viandes">Viandes 🍗</option>
+  <option value="Poissons">Poissons 🐟</option>
+  <option value="Produits laitiers">Produits laitiers 🧀</option>
+  <option value="Œufs">Œufs 🥚</option>
+  <option value="Charcuterie">Charcuterie 🥓</option>
+  <option value="Plats cuisinés">Plats cuisinés 🍲</option>
+  <option value="Pâtes">Pâtes 🍝</option>
+  <option value="Riz">Riz 🍚</option>
+  <option value="Légumineuses">Légumineuses 🌱</option>
+  <option value="Conserves">Conserves 🥫</option>
+  <option value="Épices">Épices 🧂</option>
+  <option value="Céréales">Céréales 🥣</option>
+  <option value="Biscuits & Snacks">Biscuits & Snacks 🍪</option>
+  <option value="Huiles & Vinaigres">Huiles & Vinaigres 🫒</option>
+  <option value="Farine & Sucre">Farine & Sucre 🍰</option>
+  <option value="Autre">Autre 🗃️</option>
+</select>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+  </form>
+  <a href="{% url 'frigo' %}" class="btn btn-secondary mt-2">Annuler</a>
+{% endblock %}
+</body>
+</html>

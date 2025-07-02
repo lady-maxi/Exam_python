@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'menuapp/base.html' %}
+{% block content %}
+  <div class="card shadow mb-4">
+    {% if recette.image %}
+      <img src="{{ recette.image.url }}" alt="{{ recette.nom }}" class="card-img-top img-fluid" style="max-height: 400px; object-fit: cover;">
+    {% endif %}
+    <div class="card-body">
+      <h2 class="card-title">{{ recette.nom }}</h2>
+      <p><strong>Coût estimé :</strong> {{ recette.cout_estime }} Fcfa</p>
+      <p><strong>Temps de préparation :</strong> {{ recette.temps_preparation }} min</p>
+
+      <h4>Ingrédients :</h4>
+      <ul class="list-group mb-3">
+        {% for ing in recette.ingredients.all %}
+    <li class="list-group-item">
+        {{ ing.nom }} : {{ ing.quantite }} {{ ing.unite }}
+        {% if ing.quantite == 0 or ing.quantite == "0" or ing.quantite == "0.0" %}
+        <span class="badge bg-danger">Rupture de stock</span>
+        {% endif %}
+    </li>
+    {% endfor %}
+      </ul>
+
+      <h4>Instructions :</h4>
+      <p>{{ recette.instructions }}</p>
+
+      <a href="{% url 'recettes' %}" class="btn btn-secondary mt-3">⬅️ Retour à la liste</a>
+      <a href="{% url 'export_pdf' recette.id %}" class="btn btn-warning mb-3">Exporter en PDF</a> <br>
+    </div>
+  </div>
+{% endblock %}
+</body>
+</html>
